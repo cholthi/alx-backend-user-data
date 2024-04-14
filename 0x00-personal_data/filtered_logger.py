@@ -16,6 +16,6 @@ def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """filter out sensitive data in the message"""
     for field in fields:
-        pattern = fr'({re.escape(field)})=[^;]+'
+        pattern = r'({})=[^{}]+'.format(re.escape(field), separator)
         msg = re.sub(pattern, lambda m: redact(m, redaction), message)
     return msg
