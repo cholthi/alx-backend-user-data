@@ -6,16 +6,14 @@ import re
 from typing import List
 
 
-def redact(match, redaction):
+def redact(redaction):
     """replacer function for re.sub"""
-    m = match.group(1)
-    return f'{m}={redaction}'
+    return r'\g<field>={}'.format(redaction)
 
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """filter out sensitive data in the message"""
-    for field in fields:
-        pattern = r'({})=[^{}]+'.format(re.escape(field), separator)
-        msg = re.sub(pattern, lambda m: redact(m, redaction), message)
-    return msg
+    pattern = r'(?P<field>{})=[^{}]*'.format(
+                '|'.join(fields), separator)
+    return re.sub(pattern, redact(redaction), message)
