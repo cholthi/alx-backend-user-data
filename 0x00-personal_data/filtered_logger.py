@@ -25,7 +25,7 @@ def filter_datum(fields: List[str], redaction: str,
 
 def get_logger() -> logging.Logger:
     """ returns a named logger that redacts PII data"""
-    logger = logging.getlogger("user_data")
+    logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
     redact_formatter = RedactingFormatter(PII_FIELDS)
