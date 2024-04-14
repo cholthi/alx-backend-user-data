@@ -23,6 +23,7 @@ def filter_datum(fields: List[str], redaction: str,
                 '|'.join(fields), separator)
     return re.sub(pattern, redact(redaction), message)
 
+
 def get_logger() -> logging.Logger:
     """ returns a named logger that redacts PII data"""
     logger = logging.getlooger("user_data")
@@ -34,6 +35,7 @@ def get_logger() -> logging.Logger:
     logger.addHandler(handler)
     return logger
 
+
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """ Returns a handle to mysql database connection"""
     user = os.environ.get('PERSONAL_DATA_DB_USERNAME')
@@ -41,8 +43,8 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     host = os.environ.get('PERSONAL_DATA_DB_HOST')
     dbname = os.environ.get('PERSONAL_DATA_DB_NAME')
     cnx = connection.MySQLConnection(user=user, password=password,
-                                 host=host,
-                                 database=dbname)
+                                     host=host,
+                                     database=dbname)
     return cnx
 
 
@@ -84,8 +86,7 @@ class RedactingFormatter(logging.Formatter):
         """ Formats log message"""
         msg = super(RedactingFormatter, self).format(record)
         out = filter_datum(self.fields, self.REDACTION, msg, self.SEPARATOR)
-        return out 
+        return out
 
-
-    if __name__ ==  '__main__':
+    if __name__ == '__main__':
         main()
