@@ -6,7 +6,8 @@ from typing import List, TypeVar
 
 class Auth:
     """ Base class for authentication strategies"""
-    def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
+    def require_auth(self, path: str,
+                     excluded_paths: List[str]) -> bool:
         """ check path if auth is required"""
         if path is None:
             return True
