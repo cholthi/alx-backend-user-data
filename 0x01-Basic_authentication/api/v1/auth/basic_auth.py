@@ -46,6 +46,8 @@ class BasicAuth(Auth):
         """ Load user from base64 crendentials"""
         if not user_email or type(user_email) != str:
             return None
+        if not user_pwd or str(user_pwd) != str:
+            return None
         users = User.search({"email": user_email})
         if not users:
             return None
