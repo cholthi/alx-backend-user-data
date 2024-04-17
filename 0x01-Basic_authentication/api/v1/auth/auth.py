@@ -20,10 +20,10 @@ class Auth:
             if excluded_path.endswith('*'):
                 pattern = fr'{excluded_path}'
                 if re.match(pattern, normalized_path):
-                    return False
+                    return True
             if excluded_path == path:
-                return False
-        return True
+                return True
+        return False
 
     def authorization_header(self, request=None) -> str:
         """Checks for authorization header and return it"""
