@@ -2,6 +2,7 @@
 """ Provide Auth base class for user authenitcation strategies"""
 from flask import request
 from typing import List, TypeVar
+import re
 
 
 class Auth:
@@ -15,8 +16,13 @@ class Auth:
             return True
         normalized_path = path + '/' if not path.endswith(
                         '/') else path
-        if normalized_path in excluded_paths:
-            return False
+        for excluded_path in excluded_paths:
+            if excluded_path.endswith('*'):
+                pattern = fr'{excluded_path}'
+                if re.match(pattern, normalized_path):
+                    return False
+            if excluded_path == path:
+                return False
         return True
 
     def authorization_header(self, request=None) -> str:
