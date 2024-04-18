@@ -18,7 +18,7 @@ class Auth:
                         '/') else path
         for excluded_path in excluded_paths:
             if excluded_path.endswith('*'):
-                pattern = fr'{excluded_path}'
+                pattern = fr'{excluded_path[:-1]}.*'
                 if re.match(pattern, normalized_path):
                     return False
                 else:
