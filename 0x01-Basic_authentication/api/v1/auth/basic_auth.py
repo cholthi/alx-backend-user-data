@@ -48,13 +48,16 @@ class BasicAuth(Auth):
             return None
         if user_pwd is None or type(user_pwd) != str:
             return None
-        if User.count() > 0:
-            users = User.search({"email": user_email})
-            if len(users) > 0:
-                user = users[0]
-            if not user.is_valid_password(user_pwd):
-                return None
-            return user
+        try:
+            if User.count() > 0:
+                users = User.search({"email": user_email})
+                if len(users) > 0:
+                    user = users[0]
+                    if not user.is_valid_password(user_pwd):
+                        return None
+                    return user
+        except KeyError:
+            return None
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
