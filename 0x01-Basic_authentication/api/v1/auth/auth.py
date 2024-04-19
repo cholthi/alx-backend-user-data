@@ -21,15 +21,13 @@ class Auth:
                 pattern = fr'{excluded_path[:-1]}.*'
                 if re.match(pattern, normalized_path):
                     return False
-                else:
-                    return True
-            if excluded_path == path:
+            if excluded_path == normalized_path:
                 return False
         return True
 
     def authorization_header(self, request=None) -> str:
         """Checks for authorization header and return it"""
-        if not request:
+        if request is None:
             return None
         if request.headers.get('Authorization'):
             return request.headers.get('Authorization')

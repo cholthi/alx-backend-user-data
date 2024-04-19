@@ -16,7 +16,7 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 auth = None
 if getenv('AUTH_TYPE') == 'auth':
     from api.v1.auth.auth import Auth
-    auth = None
+    auth = Auth()
 elif getenv('AUTH_TYPE') == 'basic_auth':
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
@@ -30,7 +30,7 @@ def filter_request():
             '/api/v1/unauthorized/',
             '/api/v1/forbidden/']
     if auth:
-        if not auth.require_auth(request.path, excluded_paths):
+        if  auth.require_auth(request.path, excluded_paths):
             if auth.authorization_header(request) is None:
                 abort(401)
             if auth.current_user(request) is None:
