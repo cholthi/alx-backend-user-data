@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
 """ Session athentication adapter"""
 from api.v1.auth.auth import Auth
+from typing import Dict
+import uuid
 
 
 class SessionAuth(Auth):
     """ session authentication adapter"""
-    pass
+    user_id_by_session_id: Dict = {}
+
+    def create_session(self, user_id: str = None) -> str:
+        """ Creates session ids for logged in users """
+        if user_id is None or type(user_id) != str:
+            return None
+        sess_id = str(uuid.uuid4())
+        SessionAuth.user_id_by_session_id[sess_id] = user_id
+        return sess_id
