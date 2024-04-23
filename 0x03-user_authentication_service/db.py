@@ -7,7 +7,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import User
 from typing import TypeVar
-
 from user import Base
 
 
@@ -18,7 +17,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db")
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -33,13 +32,15 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """ Adds a user to sql database using sqlalchemy store """
+        """ Adds a user to sql database using sqlalchemy store
+        """
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
         self._session.commit()
         return user
 
     def find_user_by(self, **kwargs) -> User:
-        """ finds user by arbitrary colmmns and values"""
+        """ finds user by arbitrary colmmns and values
+        """
         user = self._session.query(User).filter_by(**kwargs).one()
         return user
