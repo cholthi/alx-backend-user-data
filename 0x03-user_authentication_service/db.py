@@ -44,3 +44,15 @@ class DB:
         """
         user = self._session.query(User).filter_by(**kwargs).one()
         return user
+
+    def update_user(self, user_id, **kwargs) -> None:
+        """ Update a mapped user class attributes
+        """
+        user = self.find_user_by(id=user_id)
+        cols = User.__table__.columns.keys()
+        for arg, _ in kwargs.items():
+            if arg not in cols:
+                raise ValueError('Invalid attribute')
+        for attr, value in kwargs.items():
+            setattr(user, attr, value)
+        self._session.commit()
