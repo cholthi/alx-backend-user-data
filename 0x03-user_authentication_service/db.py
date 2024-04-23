@@ -50,11 +50,16 @@ class DB:
         """
         if user_id is None or type(user_id) != int:
             return None
-        user = self.find_user_by(id=user_id)
-        cols = User.__table__.columns.keys()
-        for arg, _ in kwargs.items():
-            if arg not in cols:
-                raise ValueError('Invalid attribute')
-        for attr, value in kwargs.items():
-            setattr(user, attr, value)
-        self._session.commit()
+        try:
+            user = self.find_user_by(id=user_id)
+            cols = User.__table__.columns.keys()
+            for arg, _ in kwargs.items():
+                if arg not in cols:
+                    raise ValueError('Invalid user attribute')
+            for attr, value in kwargs.items():
+                setattr(user, attr, value)
+            self._session.commit()
+        except InvalidRequestError:
+            raise ValueError('Invalid user attribute')
+        except Exception:
+            return None
