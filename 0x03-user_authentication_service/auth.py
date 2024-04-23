@@ -24,10 +24,9 @@ class Auth:
     def register_user(self, email: str, password: str) -> TypeVar('User'):
         """ Register a user to the user store
         """
-        user = None
         try:
             exists = self._db.find_user_by(email=email)
             raise ValueError('{} already exists'.format(email))
         except NoResultFound:
             user = self._db.add_user(email, _hash_password(password))
-        return user
+            return user
