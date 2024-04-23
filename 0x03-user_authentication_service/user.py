@@ -9,7 +9,7 @@ Base = declarative_base()
 
 class User(Base):
     """ Mapped user data class """
-    __tablename__: str = 'user'
+    __tablename__: str = 'users'
 
     id = Column(Integer, primary_key=True)
     email = Column(String(250), nullable=False)
