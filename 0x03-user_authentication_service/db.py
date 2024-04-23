@@ -48,6 +48,8 @@ class DB:
     def update_user(self, user_id, **kwargs) -> None:
         """ Update a mapped user class attributes
         """
+        if user_id is None or type(user_id) != int:
+            return None
         user = self.find_user_by(id=user_id)
         cols = User.__table__.columns.keys()
         for arg, _ in kwargs.items():
