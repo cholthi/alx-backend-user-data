@@ -5,6 +5,7 @@ import bcrypt
 from typing import TypeVar
 from sqlalchemy.orm.exc import NoResultFound
 from db import DB
+import uuid
 
 
 def _hash_password(password: str) -> bytes:
@@ -12,6 +13,11 @@ def _hash_password(password: str) -> bytes:
     """
     salt = bcrypt.gensalt(rounds=15)
     return bcrypt.hashpw(password.encode(), salt)
+
+def _generate_uuid() -> str:
+    """ generate a uuid string
+    """
+    return str(uuid.uuid4())
 
 
 class Auth:
@@ -44,4 +50,4 @@ class Auth:
             else:
                 return False
         except NoResultFound:
-            return False
+            return False)
