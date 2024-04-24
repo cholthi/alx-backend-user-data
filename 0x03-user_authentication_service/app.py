@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """ APP
 """
-from flask import Flask
+from flask import Flask, jsonify
 
 
 app = Flask(__name__)
 app.ur_map.strict_slashes = True
+
 
 @app.route('/', methods=['GET'])
 def index():
