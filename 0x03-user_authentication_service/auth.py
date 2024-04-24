@@ -54,7 +54,7 @@ class Auth:
             return False
 
     def create_session(self, email: str) -> Union[str, None]:
-        """ Create a user session and return the 
+        """ Create a user session and return the
         session identifier
         """
         try:
