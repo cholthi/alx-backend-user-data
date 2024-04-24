@@ -14,6 +14,7 @@ def _hash_password(password: str) -> bytes:
     salt = bcrypt.gensalt(rounds=15)
     return bcrypt.hashpw(password.encode(), salt)
 
+
 def _generate_uuid() -> str:
     """ generate a uuid string
     """
@@ -50,4 +51,4 @@ class Auth:
             else:
                 return False
         except NoResultFound:
-            return False)
+            return False
