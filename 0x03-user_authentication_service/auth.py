@@ -24,6 +24,8 @@ class Auth:
     def register_user(self, email: str, password: str) -> TypeVar('User'):
         """ Register a user to the user store
         """
+        if not email or not password:
+            raise ValueError('email or password can not be empty')
         try:
             _ = self._db.find_user_by(email=email)
             raise ValueError('User {} already exists'.format(email))
