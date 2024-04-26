@@ -53,7 +53,7 @@ def login() -> Response:
 
 
 @app.route('/sessions', methods=['DELETE'])
-def logout() -> str:
+def logout() -> Response:
     """Logout endpoint
     """
     session_id = request.cookies.get('session_id')
