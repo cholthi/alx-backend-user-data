@@ -2,6 +2,7 @@
 """ APP
 """
 from flask import Flask, jsonify, request, make_response, abort
+from flask import redirect
 from werkzeug.wrappers import Response
 from auth import Auth
 
@@ -60,9 +61,7 @@ def logout() -> Response:
     if user is None:
         abort(403)
     auth.destroy_session(user.id)
-    response = make_response()
-    response.delete_cookie("session_id")
-    return response
+    return redirect('/', code=302)
 
 
 if __name__ == "__main__":
